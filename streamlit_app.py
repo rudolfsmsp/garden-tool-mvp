@@ -99,6 +99,7 @@ def page_header(title: str, subtitle: str) -> None:
         st.caption(subtitle)
     with col2:
         render_image(HERO_PATH, max_width=220)
+        st.image(read_image(HERO_PATH), use_container_width=True)
 
 
 def render_sidebar() -> str:
@@ -141,6 +142,7 @@ def render_bed_card(bed) -> None:
                 st.caption(f"Atrašanās vieta: {bed['location_hint']}")
         with col2:
             render_image(photo_path, max_width=240)
+            st.image(read_image(photo_path), use_container_width=True)
 
         plants = db.fetch_all(DB_PATH, "SELECT * FROM plants WHERE bed_id = ? ORDER BY id DESC", (bed["id"],))
         tasks = db.fetch_all(
@@ -298,6 +300,7 @@ def render_locator_page():
             photo_path = get_photo_path(bed["photo_path"])
             with st.container(border=True):
                 render_image(photo_path, max_width=260)
+                st.image(read_image(photo_path), use_container_width=True)
                 st.markdown(f"**{bed['name']}**")
                 if bed["location_hint"]:
                     st.caption(bed["location_hint"])
@@ -357,6 +360,7 @@ def render_history_page():
             st.caption(f"{task['bed_name']} · {format_date(task['completed_at'])}")
             photo_path = get_photo_path(task["photo_path"])
             render_image(photo_path, max_width=320)
+            st.image(read_image(photo_path), use_container_width=True)
             if not task["photo_path"]:
                 upload = st.file_uploader(
                     "Pievienot foto", type=["png", "jpg", "jpeg"], key=f"history_photo_{task['id']}"
@@ -383,6 +387,10 @@ def inject_styles():
         }
         section[data-testid="stSidebar"] {
             background: #f8fbf9;
+            background: #f4f8f6;
+        }
+        section[data-testid="stSidebar"] {
+            background: #ffffff;
             border-right: 1px solid #d5e2db;
         }
         .block-container {
