@@ -57,6 +57,35 @@ def read_image(path: str) -> bytes:
         return handle.read()
 
 
+def is_svg(path: str) -> bool:
+    if path.lower().endswith(".svg"):
+        return True
+    try:
+        with open(path, "rb") as handle:
+            sample = handle.read(200)
+        return b"<svg" in sample.lower()
+    except OSError:
+        return False
+
+
+def render_svg(path: str, max_width: int = 220) -> None:
+    svg = load_svg(path)
+    st.markdown(
+        f"<div class='svg-image' style='max-width:{max_width}px'>{svg}</div>",
+        unsafe_allow_html=True,
+    )
+
+
+def render_image(path: str, max_width: int = 240) -> None:
+    if is_svg(path):
+        render_svg(path, max_width=max_width)
+        return
+    try:
+        st.image(read_image(path), use_container_width=True)
+    except Exception:
+        st.markdown("<div class='image-fallback'>Attēlu nevarēja ielādēt.</div>", unsafe_allow_html=True)
+
+
 def get_photo_path(filename: Optional[str]) -> str:
     if not filename:
         return PLACEHOLDER_PATH
@@ -69,6 +98,7 @@ def page_header(title: str, subtitle: str) -> None:
         st.markdown(f"## {title}")
         st.caption(subtitle)
     with col2:
+        render_image(HERO_PATH, max_width=220)
         st.image(read_image(HERO_PATH), use_container_width=True)
 
 
@@ -111,6 +141,7 @@ def render_bed_card(bed) -> None:
             if bed["location_hint"]:
                 st.caption(f"Atrašanās vieta: {bed['location_hint']}")
         with col2:
+            render_image(photo_path, max_width=240)
             st.image(read_image(photo_path), use_container_width=True)
 
         plants = db.fetch_all(DB_PATH, "SELECT * FROM plants WHERE bed_id = ? ORDER BY id DESC", (bed["id"],))
@@ -268,6 +299,7 @@ def render_locator_page():
         with cols[idx % 2]:
             photo_path = get_photo_path(bed["photo_path"])
             with st.container(border=True):
+                render_image(photo_path, max_width=260)
                 st.image(read_image(photo_path), use_container_width=True)
                 st.markdown(f"**{bed['name']}**")
                 if bed["location_hint"]:
@@ -327,6 +359,7 @@ def render_history_page():
             st.markdown(f"**{task['task_type']}**")
             st.caption(f"{task['bed_name']} · {format_date(task['completed_at'])}")
             photo_path = get_photo_path(task["photo_path"])
+            render_image(photo_path, max_width=320)
             st.image(read_image(photo_path), use_container_width=True)
             if not task["photo_path"]:
                 upload = st.file_uploader(
@@ -348,6 +381,12 @@ def inject_styles():
         """
         <style>
         .stApp {
+            background: #edf3ef;
+            color: #1f2b24;
+            font-size: 18px;
+        }
+        section[data-testid="stSidebar"] {
+            background: #f8fbf9;
             background: #f4f8f6;
         }
         section[data-testid="stSidebar"] {
@@ -356,6 +395,33 @@ def inject_styles():
         }
         .block-container {
             padding-top: 2rem;
+        }
+        .svg-image svg {
+            width: 100%;
+            height: auto;
+        }
+        .stApp [data-testid="stContainer"] {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid #d5e2db;
+        }
+        .image-fallback {
+            background: #f1f5f2;
+            border-radius: 12px;
+            padding: 16px;
+            color: #526158;
+            text-align: center;
+        }
+        .stButton button,
+        .stTextInput input,
+        .stTextArea textarea,
+        .stSelectbox select,
+        .stDateInput input {
+            font-size: 17px;
+        }
+        [data-testid="stMarkdownContainer"] h2 {
+            font-size: 1.6rem;
         }
         </style>
         """,
