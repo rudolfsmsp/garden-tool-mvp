@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" role="img" aria-label="Vieta fotoattēlam">
+  <rect width="240" height="160" rx="16" fill="#eef3f0"/>
+  <path d="M40 120l40-50 40 40 30-30 50 60" fill="none" stroke="#b9cbbf" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="70" cy="60" r="12" fill="#c9d9d0"/>
+  <text x="120" y="140" font-family="Arial, sans-serif" font-size="12" fill="#8ea39a" text-anchor="middle">Pievienojiet foto</text>
+</svg>
