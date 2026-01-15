@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 200" role="img" aria-label="Dārza ilustrācija">
+  <rect width="260" height="200" rx="24" fill="#e7f2ec"/>
+  <path d="M20 150c30-40 70-60 110-60s80 20 110 60" fill="none" stroke="#2f6f3d" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="70" cy="90" r="28" fill="#4fa96b"/>
+  <circle cx="160" cy="80" r="22" fill="#6cc38a"/>
+  <circle cx="210" cy="110" r="18" fill="#4fa96b"/>
+  <rect x="30" y="150" width="200" height="20" rx="10" fill="#c3dacb"/>
+</svg>
