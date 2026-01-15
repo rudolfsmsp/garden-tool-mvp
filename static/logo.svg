@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Zaļais Pirksts logo">
+  <defs>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fa96b"/>
+      <stop offset="100%" stop-color="#2f6f3d"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#e7f2ec"/>
+  <path d="M32 12c-7 8-9 14-9 20 0 8 5 14 9 14s9-6 9-14c0-6-2-12-9-20z" fill="url(#leaf)"/>
+  <path d="M24 34c6 2 10 6 12 12" stroke="#1f2b24" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
